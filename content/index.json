@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "fermented-leaf-tea",
+    "tag": "TECHNICAL GUIDE",
+    "status": "PUBLISHED",
+    "version": "v1.0",
+    "date": "2026-11-24",
+    "title": {
+      "ru": "Ферментированный чай из листьев садовых и дикорастущих растений",
+      "en": "Fermented Tea from Garden and Wild Plant Leaves"
+    },
+    "summary": {
+      "ru": "Завяливание: 12 ч (20–24°C) · Ферментация: 6–8 ч (22–26°C) · Сушка: 100°C -> 50–60°C · Выдержка: от 30 дней.",
+      "en": "Withering: 12h (20–24°C) · Fermentation: 6–8h (22–26°C) · Drying: 100°C -> 50–60°C · Aging: 30+ days."
+    }
+  }
+]

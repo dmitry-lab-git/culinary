@@ -5,8 +5,12 @@ const UI_STRINGS = {
     catalogTitle: 'Журнал рецептов и тестов',
     backBtn: '← Назад',
     versionLabel: 'Версия',
+    firstDraftLabel: 'Первое оформление статьи',
+    revisionLabel: 'Редакция',
+    loading: 'Загрузка…',
     notFound: 'Материал не найден.',
-    loadError: 'Ошибка загрузки материалов.'
+    loadError: 'Ошибка загрузки материалов.',
+    retryBtn: 'Повторить'
   },
   en: {
     pageTitleIndex: 'Dmitry Lab — Recipe & Test Journal',
@@ -14,8 +18,12 @@ const UI_STRINGS = {
     catalogTitle: 'Recipe & Test Journal',
     backBtn: '← Back',
     versionLabel: 'Version',
+    firstDraftLabel: 'Initial draft',
+    revisionLabel: 'Revision',
+    loading: 'Loading…',
     notFound: 'Entry not found.',
-    loadError: 'Failed to load entries.'
+    loadError: 'Failed to load entries.',
+    retryBtn: 'Retry'
   }
 };
 
@@ -47,7 +55,9 @@ function t(field, lang) {
 function updateLangButtons(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll('.lang-switch .btn[data-lang]').forEach((btn) => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+    const isActive = btn.dataset.lang === lang;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', String(isActive));
   });
 }
 
@@ -61,6 +71,44 @@ function updateMetaDescription(text) {
   meta.content = text;
 }
 
+function renderErrorBlock(message, retryLabel) {
+  return `
+    <div class="callout-caution" role="alert">
+      <p>${message}</p>
+      <p style="margin-top: 12px;">
+        <button type="button" class="btn" onclick="renderPage()">${retryLabel}</button>
+      </p>
+    </div>
+  `;
+}
+
+function renderColophon(item, ui, lang, bodyHtml) {
+  if (bodyHtml.includes('class="doc-colophon"')) return '';
+
+  const author = t(item.author, lang);
+  const firstDate = item.createdDate || item.firstDate || '';
+  const revisionDate = item.revisionDate || item.date || '';
+  const revisionNo = item.revision || item.version || '';
+
+  const dateLines = [];
+  if (firstDate) {
+    dateLines.push(`<span>${ui.firstDraftLabel}: ${firstDate}</span>`);
+  }
+  if (revisionDate) {
+    const revSuffix = revisionNo ? ` (${revisionNo})` : '';
+    dateLines.push(`<span>${ui.revisionLabel}${revSuffix}: ${revisionDate}</span>`);
+  }
+
+  if (!author && dateLines.length === 0) return '';
+
+  return `
+    <div class="doc-colophon">
+      ${author ? `<div class="doc-colophon-author">${author}</div>` : ''}
+      ${dateLines.length ? `<div class="doc-colophon-dates">${dateLines.join('')}</div>` : ''}
+    </div>
+  `;
+}
+
 async function renderCatalog(lang) {
   const grid = document.getElementById('posts-grid');
   if (!grid) return;
@@ -71,6 +119,8 @@ async function renderCatalog(lang) {
 
   const catalogTitle = document.getElementById('catalog-title');
   if (catalogTitle) catalogTitle.textContent = ui.catalogTitle;
+
+  grid.innerHTML = `<p class="mono">${ui.loading}</p>`;
 
   try {
     const res = await fetch('content/index.json');
@@ -102,7 +152,7 @@ async function renderCatalog(lang) {
       `;
     }).join('');
   } catch (err) {
-    grid.innerHTML = `<p>${ui.loadError}</p>`;
+    grid.innerHTML = renderErrorBlock(ui.loadError, ui.retryBtn);
   }
 }
 
@@ -123,6 +173,8 @@ async function renderPost(lang) {
     container.innerHTML = `<p>${ui.notFound}</p>`;
     return;
   }
+
+  container.innerHTML = `<p class="mono">${ui.loading}</p>`;
 
   try {
     const indexRes = await fetch('content/index.json');
@@ -152,19 +204,22 @@ async function renderPost(lang) {
       ? rawContent
       : (window.marked ? window.marked.parse(rawContent) : rawContent);
 
+    const colophonHtml = renderColophon(item, ui, lang, bodyHtml);
+
     container.innerHTML = `
       <header class="post-header">
-        <div class="meta-row">
+        <div class="meta-row post-meta-bar">
+          <a href="index.html?lang=${lang}" class="btn btn-back" id="back-btn">${ui.backBtn}</a>
           <span class="tag">${tag}</span>
           <span class="status">${status}</span>
           <span class="mono">${item.date || ''} · ${item.version || ''}</span>
         </div>
         <h1>${title}</h1>
       </header>
-      <article class="post-body">${bodyHtml}</article>
+      <article class="post-body">${bodyHtml}${colophonHtml}</article>
     `;
   } catch (err) {
-    container.innerHTML = `<p>${ui.loadError}</p>`;
+    container.innerHTML = renderErrorBlock(ui.loadError, ui.retryBtn);
   }
 }
 

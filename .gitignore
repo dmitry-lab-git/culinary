@@ -1,0 +1,21 @@
+# OS & Windows/WSL metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment & Secrets
+.env
+.env.local
+
+# Future build/tooling folders (if added later)
+node_modules/
+dist/
+.cache/

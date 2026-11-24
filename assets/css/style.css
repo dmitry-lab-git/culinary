@@ -1,0 +1,225 @@
+:root {
+  --emerald-teal: #0F766E;
+  --forest-slate: #115E59;
+  --mint-surface: #F0FDFA;
+  --soft-aqua-border: #99F6E4;
+  --warm-amber-surface: #FEF3C7;
+  --amber-accent: #D97706;
+  --amber-text: #92400E;
+  --charcoal-ink: #1E293B;
+  --slate-gray: #475569;
+  --cool-light-gray: #F8FAFC;
+  --subtle-border: #E2E8F0;
+  --matte-gray: #7A7A7A;
+  --white: #FFFFFF;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--charcoal-ink);
+  background-color: var(--white);
+  line-height: 1.55;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header */
+header {
+  border-bottom: 1px solid var(--subtle-border);
+  padding: 20px 0;
+  margin-bottom: 32px;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1.5px solid var(--emerald-teal);
+  background: var(--white);
+  color: var(--emerald-teal);
+  transition: all 0.15s ease;
+}
+
+.btn:hover { background: var(--mint-surface); }
+.btn.active {
+  background: var(--emerald-teal);
+  color: var(--white);
+}
+
+/* Section Title (H2 standard) */
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  border-left: 4px solid var(--emerald-teal);
+  padding-left: 12px;
+  margin-bottom: 24px;
+}
+
+/* Grid 12 cols */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* Project / Recipe Card */
+.card {
+  background: var(--white);
+  border: 1px solid var(--subtle-border);
+  border-radius: 8px;
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover { border-color: var(--emerald-teal); }
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.tag {
+  background: var(--cool-light-gray);
+  border: 1px solid var(--subtle-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--slate-gray);
+}
+
+.status { color: var(--emerald-teal); font-weight: 600; }
+
+.card h3 {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--emerald-teal);
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--slate-gray);
+  margin-bottom: 16px;
+}
+
+.card-footer {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--slate-gray);
+  border-top: 1px solid var(--subtle-border);
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Post View */
+.post-header {
+  background: var(--cool-light-gray);
+  border: 1px solid var(--subtle-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.post-header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 12px 0;
+}
+
+.summary-box {
+  background: var(--mint-surface);
+  border: 1px solid var(--soft-aqua-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.warning-box {
+  background: var(--warm-amber-surface);
+  border-left: 4px solid var(--amber-accent);
+  color: var(--amber-text);
+  padding: 14px 18px;
+  border-radius: 4px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.post-body h2 {
+  font-size: 22px;
+  font-weight: 600;
+  border-left: 4px solid var(--emerald-teal);
+  padding-left: 12px;
+  margin: 28px 0 14px;
+}
+
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: var(--cool-light-gray);
+  font-size: 14px;
+}
+
+.post-body th, .post-body td {
+  border: 1px solid var(--subtle-border);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.post-body ul, .post-body ol {
+  padding-left: 22px;
+  margin-bottom: 16px;
+}
+
+.post-body code {
+  font-family: var(--font-mono);
+  background: var(--cool-light-gray);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--subtle-border);
+  padding: 20px 0;
+  margin-top: 60px;
+  font-size: 13px;
+  color: var(--slate-gray);
+  display: flex;
+  justify-content: space-between;
+}

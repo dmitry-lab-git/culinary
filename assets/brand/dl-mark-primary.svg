@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="DL">
+  <rect x="4" y="4" width="88" height="88" rx="10" fill="#0F766E"/>
+  <text x="48" y="49"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-family="Inter, 'DejaVu Sans', 'Liberation Sans', sans-serif"
+        font-weight="600"
+        font-size="42"
+        letter-spacing="1"
+        fill="#FFFFFF">DL</text>
+</svg>

@@ -4,29 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dmitry Lab — Protocol</title>
-  <link rel="preconnect" href="https://googleapis.com">
-  <link href="https://googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script src="https://jsdelivr.net"></script>
 </head>
 <body>
-  <header>
-    <div class="container header-inner">
-      <a href="index.html"><img src="assets/brand/dmitry-lab-wordmark.svg" alt="Dmitry Lab"></a>
+  <div class="container">
+    <header class="doc-header">
+      <a class="brand-link" href="index.html" aria-label="Dmitry Lab">
+        <img src="assets/brand/dmitry-lab-wordmark.svg" alt="DMITRY LAB" width="244" height="42">
+      </a>
       <div class="lang-switch">
         <a href="index.html" class="btn" id="back-btn">← Назад</a>
         <button class="btn" data-lang="ru" onclick="setLang('ru')">RU</button>
         <button class="btn" data-lang="en" onclick="setLang('en')">EN</button>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main class="container" id="post-container"></main>
+    <main id="post-container"></main>
 
-  <footer class="container">
-    <span>Dmitry Lab — Culinary Systems</span>
-    <span>Standard v1.2 · Craft. Construction. Result.</span>
-  </footer>
+    <footer class="doc-footer">
+      <div class="footer-brand">
+        <img src="assets/brand/dl-mark-primary.svg" alt="DL Mark" width="28" height="28">
+        <span><strong>DMITRY LAB</strong> — Craft. Construction. Result.</span>
+      </div>
+      <div class="mono">Standard v1.2 · Culinary Systems</div>
+    </footer>
+  </div>
 
   <script src="assets/js/app.js"></script>
 </body>

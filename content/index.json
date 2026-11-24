@@ -1,8 +1,15 @@
 [
   {
     "slug": "fermented-leaf-tea",
-    "tag": "TECHNICAL GUIDE",
-    "status": "PUBLISHED",
+    "format": "html",
+    "tag": {
+      "ru": "РЕЦЕПТ",
+      "en": "RECIPE"
+    },
+    "status": {
+      "ru": "ОПУБЛИКОВАНО",
+      "en": "PUBLISHED"
+    },
     "version": "v1.0",
     "date": "2026-11-24",
     "title": {
@@ -10,8 +17,8 @@
       "en": "Fermented Tea from Garden and Wild Plant Leaves"
     },
     "summary": {
-      "ru": "Завяливание: 12 ч (20–24°C) · Ферментация: 6–8 ч (22–26°C) · Сушка: 100°C -> 50–60°C · Выдержка: от 30 дней.",
-      "en": "Withering: 12h (20–24°C) · Fermentation: 6–8h (22–26°C) · Drying: 100°C -> 50–60°C · Aging: 30+ days."
+      "ru": "Описание процесса сбора, подготовки, обработки и приготовления основы для травяного напитка на основе питательных сокосодержащих листьев.",
+      "en": "A step-by-step guide to harvesting, preparing, processing, and crafting a base for an herbal infusion made from nutrient-rich, sap-bearing leaves."
     }
   }
 ]

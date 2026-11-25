@@ -10,8 +10,19 @@
       "ru": "Опубликовано",
       "en": "Published"
     },
+    "firstVersion": "v1.0",
+    "firstDate": "2026-06-23",
     "version": "v1.1",
     "date": "2026-11-25",
+    "author": {
+      "ru": "Дмитрий Мелихов",
+      "en": "Dmitry Melikhov"
+    },
+    "sourceRecipe": {
+      "ru": "Татьяна Журавская",
+      "en": "Tatyana Zhuravskaya"
+    },
+    "platform": "Dmitry Lab Culinary",
     "title": {
       "ru": "Маринованные огурцы",
       "en": "Marinated Cucumbers"
@@ -32,8 +43,16 @@
       "ru": "Опубликовано",
       "en": "Published"
     },
+    "firstVersion": "v1.0",
+    "firstDate": "2026-06-23",
     "version": "v. 1.1",
     "date": "2026-11-24",
+    "author": {
+      "ru": "Дмитрий Мелихов",
+      "en": "Dmitry Melikhov"
+    },
+    "sourceRecipe": "",
+    "platform": "Dmitry Lab Culinary",
     "title": {
       "ru": "Ферментация листьев садовых и дикорастущих растений",
       "en": "Fermentation of Garden and Wild Plant Leaves"

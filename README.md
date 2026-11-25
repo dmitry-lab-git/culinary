@@ -92,3 +92,8 @@ node build-share.mjs
 2. Перейдите на страницу статьи (`post.html?slug=<slug>`) и проверьте шапку, строку метаданных, заголовки, списки и блок `.doc-colophon` на десктопе и на мобильном экране.
 3. Нажмите плавающую кнопку **«Поделиться ссылкой»**, откройте скопированный адрес `share/<slug>-<lang>.html` и убедитесь, что стили подключились, текст отображается полностью, а кнопка копирования работает.
 4. Зафиксируйте изменения в Git (включая сгенерированные файлы в `share/`) и отправьте в репозиторий.
+
+cd ~/Projects/web_studio/culinary
+node build-share.mjs
+
+После запуска проверьте `git status` / `git diff share/`, чтобы убедиться, что все 4 страницы (`marinated-cucumbers-ru.html`, `marinated-cucumbers-en.html`, `fermented-leaf-tea-ru.html`, `fermented-leaf-tea-en.html`) обновились корректно[cite: 5, 6].

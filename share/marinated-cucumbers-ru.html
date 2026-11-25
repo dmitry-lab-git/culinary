@@ -6,15 +6,36 @@
   <title>Маринованные огурцы — Dmitry Lab</title>
   <meta name="description" content="Редакционно обработанный рецепт маринованных огурцов с уточнёнными пропорциями на 1 л воды, пошаговой подготовкой и примечаниями по безопасности и хранению.">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Dmitry Lab">
   <meta property="og:title" content="Маринованные огурцы — Dmitry Lab">
   <meta property="og:description" content="Редакционно обработанный рецепт маринованных огурцов с уточнёнными пропорциями на 1 л воды, пошаговой подготовкой и примечаниями по безопасности и хранению.">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+  <header class="site-header" style="border-bottom: 1px solid #E2E8F0; padding: 16px 0; margin-bottom: 24px;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="../index.html?lang=ru" style="text-decoration: none; color: #1E293B; font-weight: 600; letter-spacing: 0.04em; border-left: 4px solid #0F766E; padding-left: 10px;">
+        DMITRY LAB <span style="color: #475569; font-weight: 400;">· Culinary Systems</span>
+      </a>
+      <nav style="display: flex; gap: 8px; align-items: center;">
+        <a href="../index.html?lang=ru" class="btn">Каталог</a>
+        <a href="../post.html?slug=marinated-cucumbers&lang=ru" class="btn">← Интерактивная версия</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="container">
-    <p><a href="../post.html?slug=marinated-cucumbers&lang=ru" class="btn btn-back">← Открыть интерактивную версию</a></p>
-    <h1>Маринованные огурцы</h1>
-    <article class="post-body"><details class="ai-accordion">
+    <header class="post-header">
+      <div class="meta-row post-meta-bar">
+        <span class="tag">Рецепт</span>
+        <span class="status">Опубликовано</span>
+        <span class="mono">2026-11-25 · v1.1</span>
+      </div>
+      <h1>Маринованные огурцы</h1>
+    </header>
+
+    <article class="post-body">
+<details class="ai-accordion">
   <summary class="ai-accordion-summary">
     <span class="ai-accordion-title">Дополнительные возможности: разбор рецепта с помощью AI-ассистента</span>
     <span class="ai-accordion-icon" aria-hidden="true">+</span>
@@ -159,18 +180,46 @@
   <p>Рецептура не валидирована для хранения при комнатной температуре. Указанные наблюдения о хранении в холодильнике отражают практический опыт, но не устанавливают гарантированный срок безопасного хранения.<br><br></p>
   <p>Таким образом, публикация документирует конкретную рецептуру и практику её применения, но не устанавливает универсальных условий безопасного консервирования и не подтверждает пригодность описанной технологии для длительного хранения. До подтверждения безопасности рецептуры и процесса не рекомендуется использовать её для хранения при комнатной температуре.</p>
 </div>
-
 <div class="doc-colophon">
   <p><strong>Автор:</strong> Дмитрий Мелихов</p>
   <p><strong>Исходная рецептура:</strong> Татьяна Журавская</p>
   <p><strong>Платформа:</strong> Dmitry Lab Culinary</p>
   <p><strong>Версия публикации:</strong> 1.1</p>
   <p><strong>Дата публикации:</strong> 25.11.2026</p>
-</div></article>
+</div>
+    </article>
   </main>
 
-  <button type="button" class="floating-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(() => { this.textContent = '✓ Скопировано'; this.classList.add('copied'); setTimeout(() => { this.textContent = '🔗 Поделиться ссылкой'; this.classList.remove('copied'); }, 2000); })">
-    🔗 Поделиться ссылкой
+  <footer style="border-top: 1px solid #E2E8F0; margin-top: 48px; padding: 20px 0; color: #475569; font-size: 13px;">
+    <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <span><strong style="color: #0F766E;">DMITRY LAB</strong> — Craft. Construction. Result.</span>
+      <span class="mono">v1.1 · 2026-11-25</span>
+    </div>
+  </footer>
+
+  <button type="button" id="floating-share-btn" class="floating-share-btn" onclick="copyCurrentUrl(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    <span>Поделиться ссылкой</span>
   </button>
+
+  <script>
+    function copyCurrentUrl(btn) {
+      const url = window.location.href;
+      if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+        navigator.share({ title: document.title, url }).catch(() => {});
+        return;
+      }
+      navigator.clipboard.writeText(url).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Ссылка скопирована</span>';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Поделиться ссылкой</span>';
+        }, 2000);
+      }).catch(() => {
+        prompt('Поделиться ссылкой', url);
+      });
+    }
+  </script>
 </body>
 </html>

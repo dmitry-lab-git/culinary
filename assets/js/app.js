@@ -7,8 +7,15 @@ const UI_STRINGS = {
     shareBtn: 'Поделиться ссылкой',
     copiedBtn: 'Ссылка скопирована',
     versionLabel: 'Версия',
+    publicationVersionLabel: 'Версия публикации',
+    publicationDateLabel: 'Дата публикации',
+    authorLabel: 'Автор',
+    sourceRecipeLabel: 'Исходная рецептура',
+    platformLabel: 'Платформа',
     firstDraftLabel: 'Первое оформление статьи',
     revisionLabel: 'Редакция',
+    firstEditionLabel: 'Первая редакция',
+    currentEditionLabel: 'Текущая редакция',
     loading: 'Загрузка…',
     notFound: 'Материал не найден.',
     loadError: 'Ошибка загрузки материалов.',
@@ -22,8 +29,15 @@ const UI_STRINGS = {
     shareBtn: 'Share link',
     copiedBtn: 'Link copied',
     versionLabel: 'Version',
+    publicationVersionLabel: 'Publication version',
+    publicationDateLabel: 'Publication date',
+    authorLabel: 'Author',
+    sourceRecipeLabel: 'Original recipe',
+    platformLabel: 'Platform',
     firstDraftLabel: 'Initial draft',
     revisionLabel: 'Revision',
+    firstEditionLabel: 'First edition',
+    currentEditionLabel: 'Current edition',
     loading: 'Loading…',
     notFound: 'Entry not found.',
     loadError: 'Failed to load entries.',
@@ -75,6 +89,33 @@ function updateMetaDescription(text) {
   meta.content = text;
 }
 
+function escapeAttr(str = '') {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function formatDisplayDate(rawDate, lang) {
+  if (!rawDate) return '';
+  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(rawDate).trim());
+  if (!isoMatch) return String(rawDate);
+  const [, year, month, day] = isoMatch;
+  if (lang === 'en') return `${month}/${day}/${year}`;
+  return `${day}.${month}.${year}`;
+}
+
+function normalizeVersion(rawVersion) {
+  if (!rawVersion) return '';
+  return String(rawVersion).trim().replace(/^v\.?\s*/i, '');
+}
+
+function formatEditionTag(rawVersion) {
+  const cleaned = normalizeVersion(rawVersion);
+  return cleaned ? `v${cleaned}` : '';
+}
+
 // === ОБНОВЛЁННАЯ ФУНКЦИЯ ===
 function copyShareUrl(slug, lang, btnElement, shareIcon, checkIcon) {
   const ui = UI_STRINGS[lang];
@@ -108,31 +149,64 @@ function renderErrorBlock(message, retryLabel) {
   `;
 }
 
-function renderColophon(item, ui, lang, bodyHtml) {
-  if (bodyHtml.includes('class="doc-colophon"')) return '';
+function renderEditionNotes(item, ui) {
+  const firstDate = item.firstDate || item.createdDate || '';
+  const firstVer = formatEditionTag(item.firstVersion || 'v1.0');
+  const currentDate = item.revisionDate || item.date || '';
+  const currentVer = formatEditionTag(item.revision || item.version || '');
 
-  const author = t(item.author, lang);
-  const firstDate = item.createdDate || item.firstDate || '';
-  const revisionDate = item.revisionDate || item.date || '';
-  const revisionNo = item.revision || item.version || '';
-
-  const dateLines = [];
+  const spans = [];
   if (firstDate) {
-    dateLines.push(`<span>${ui.firstDraftLabel}: ${firstDate}</span>`);
+    const verPart = firstVer ? ` (${firstVer})` : '';
+    spans.push(
+      `  <span>${ui.firstEditionLabel}${verPart}: <time datetime="${escapeAttr(firstDate)}">${firstDate}</time></span>`
+    );
   }
-  if (revisionDate) {
-    const revSuffix = revisionNo ? ` (${revisionNo})` : '';
-    dateLines.push(`<span>${ui.revisionLabel}${revSuffix}: ${revisionDate}</span>`);
+  if (currentDate) {
+    const verPart = currentVer ? ` (${currentVer})` : '';
+    spans.push(
+      `  <span>${ui.currentEditionLabel}${verPart}: <time datetime="${escapeAttr(currentDate)}">${currentDate}</time></span>`
+    );
   }
 
-  if (!author && dateLines.length === 0) return '';
+  if (!spans.length) return '';
+  return `<div class="doc-colophon-dates">\n${spans.join('\n')}\n</div>`;
+}
 
-  return `
-    <div class="doc-colophon">
-      ${author ? `<div class="doc-colophon-author">${author}</div>` : ''}
-      ${dateLines.length ? `<div class="doc-colophon-dates">${dateLines.join('')}</div>` : ''}
-    </div>
-  `;
+function renderColophon(item, ui, lang) {
+  const author = t(item.author, lang);
+  const sourceRecipe = t(item.sourceRecipe, lang);
+  const platform = t(item.platform, lang);
+  const version = normalizeVersion(item.version);
+  const pubDate = formatDisplayDate(item.date, lang);
+
+  const lines = [];
+  if (author) {
+    lines.push(`<p><strong>${ui.authorLabel}:</strong> ${author}</p>`);
+  }
+  if (sourceRecipe) {
+    lines.push(`<p><strong>${ui.sourceRecipeLabel}:</strong> ${sourceRecipe}</p>`);
+  }
+  if (platform) {
+    lines.push(`<p><strong>${ui.platformLabel}:</strong> ${platform}</p>`);
+  }
+  if (version) {
+    lines.push(`<p><strong>${ui.publicationVersionLabel}:</strong> ${version}</p>`);
+  }
+  if (pubDate) {
+    lines.push(`<p><strong>${ui.publicationDateLabel}:</strong> ${pubDate}</p>`);
+  }
+
+  const editionsHtml = renderEditionNotes(item, ui);
+  const colophonHtml = lines.length
+    ? `<div class="doc-colophon">\n  ${lines.join('\n  ')}\n</div>`
+    : '';
+
+  return `${editionsHtml}${colophonHtml}`;
+}
+
+function stripManualColophon(html) {
+  return html.replace(/<div\s+class=["']doc-colophon["'][\s\S]*?<\/div>\s*$/i, '').trim();
 }
 
 async function renderCatalog(lang) {
@@ -159,6 +233,7 @@ async function renderCatalog(lang) {
       const tag = t(item.tag, lang);
       const status = t(item.status, lang);
       const href = `post.html?slug=${encodeURIComponent(item.slug)}&lang=${lang}`;
+      const version = normalizeVersion(item.version);
 
       return `
         <a class="card" href="${href}">
@@ -172,7 +247,7 @@ async function renderCatalog(lang) {
           </div>
           <div class="card-footer">
             <span>${item.date || ''}</span>
-            <span>${ui.versionLabel}: ${item.version || ''}</span>
+            <span>${ui.versionLabel}: ${version}</span>
           </div>
         </a>
       `;
@@ -187,12 +262,6 @@ async function renderPost(lang) {
   if (!container) return;
 
   const ui = UI_STRINGS[lang];
-  const backBtn = document.getElementById('back-btn');
-  if (backBtn) {
-    backBtn.textContent = ui.backBtn;
-    backBtn.href = `index.html?lang=${lang}`;
-  }
-
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('slug');
   if (!slug) {
@@ -217,6 +286,7 @@ async function renderPost(lang) {
     const summary = t(item.summary, lang);
     const tag = t(item.tag, lang);
     const status = t(item.status, lang);
+    const version = normalizeVersion(item.version);
 
     document.title = `${title} — Dmitry Lab`;
     updateMetaDescription(summary);
@@ -226,11 +296,12 @@ async function renderPost(lang) {
     if (!contentRes.ok) throw new Error('HTTP ' + contentRes.status);
     const rawContent = await contentRes.text();
 
-    const bodyHtml = ext === 'html'
+    const parsedHtml = ext === 'html'
       ? rawContent
       : (window.marked ? window.marked.parse(rawContent) : rawContent);
 
-    const colophonHtml = renderColophon(item, ui, lang, bodyHtml);
+    const bodyHtml = stripManualColophon(parsedHtml);
+    const colophonHtml = renderColophon(item, ui, lang);
 
     container.innerHTML = `
       <header class="post-header">
@@ -238,7 +309,7 @@ async function renderPost(lang) {
           <a href="index.html?lang=${lang}" class="btn btn-back" id="back-btn">${ui.backBtn}</a>
           <span class="tag">${tag}</span>
           <span class="status">${status}</span>
-          <span class="mono">${item.date || ''} · ${item.version || ''}</span>
+          <span class="mono">${item.date || ''}${version ? ` · v${version}` : ''}</span>
         </div>
         <h1>${title}</h1>
       </header>

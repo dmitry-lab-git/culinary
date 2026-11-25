@@ -6,15 +6,36 @@
   <title>Ферментация листьев садовых и дикорастущих растений — Dmitry Lab</title>
   <meta name="description" content="Сбор, подготовка, ферментация и сушка сочных листьев для получения ароматной основы под горячий настой.">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Dmitry Lab">
   <meta property="og:title" content="Ферментация листьев садовых и дикорастущих растений — Dmitry Lab">
   <meta property="og:description" content="Сбор, подготовка, ферментация и сушка сочных листьев для получения ароматной основы под горячий настой.">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+  <header class="site-header" style="border-bottom: 1px solid #E2E8F0; padding: 16px 0; margin-bottom: 24px;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="../index.html?lang=ru" style="text-decoration: none; color: #1E293B; font-weight: 600; letter-spacing: 0.04em; border-left: 4px solid #0F766E; padding-left: 10px;">
+        DMITRY LAB <span style="color: #475569; font-weight: 400;">· Culinary Systems</span>
+      </a>
+      <nav style="display: flex; gap: 8px; align-items: center;">
+        <a href="../index.html?lang=ru" class="btn">Каталог</a>
+        <a href="../post.html?slug=fermented-leaf-tea&lang=ru" class="btn">← Интерактивная версия</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="container">
-    <p><a href="../post.html?slug=fermented-leaf-tea&lang=ru" class="btn btn-back">← Открыть интерактивную версию</a></p>
-    <h1>Ферментация листьев садовых и дикорастущих растений</h1>
-    <article class="post-body"><details class="ai-accordion">
+    <header class="post-header">
+      <div class="meta-row post-meta-bar">
+        <span class="tag">Рецепт</span>
+        <span class="status">Опубликовано</span>
+        <span class="mono">2026-11-24 · v1.1</span>
+      </div>
+      <h1>Ферментация листьев садовых и дикорастущих растений</h1>
+    </header>
+
+    <article class="post-body">
+<details class="ai-accordion">
   <summary class="ai-accordion-summary">
     <span class="ai-accordion-title">Дополнительные возможности: разбор рецепта с помощью AI-ассистента</span>
     <span class="ai-accordion-icon" aria-hidden="true">+</span>
@@ -153,17 +174,50 @@
 <h2 id="sec-sources">Источники и авторская редакция</h2>
 <p>Материал подготовлен на основе проведённых практических опытов с получением положительных результатов, а также статьи с сайта hlebopechka.ru «Ферментированный чай из листьев садовых и дикорастущих растений».</p>
 <p>Текст переработан на основе внимательного прочтения первоначальной публикации. В него включены собственные практические наблюдения, результаты экспериментов и авторские технологические решения.</p>
-<div class="doc-colophon">
-  <div class="doc-colophon-author">Мелихов Дмитрий</div>
-  <div class="doc-colophon-dates">
+<div class="doc-colophon-dates">
     <span>Первая редакция (v 1.0): <time datetime="2024-01-10">2024-01-10</time></span>
     <span>Вторая редакция (v 1.1): <time datetime="2026-11-24">2026-11-24</time></span>
   </div>
-</div></article>
+</div>
+<div class="doc-colophon">
+  <p><strong>Автор:</strong> Дмитрий Мелихов</p>
+  <p><strong>Платформа:</strong> Dmitry Lab Culinary</p>
+  <p><strong>Версия публикации:</strong> 1.1</p>
+  <p><strong>Дата публикации:</strong> 24.11.2026</p>
+</div>
+    </article>
   </main>
 
-  <button type="button" class="floating-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(() => { this.textContent = '✓ Скопировано'; this.classList.add('copied'); setTimeout(() => { this.textContent = '🔗 Поделиться ссылкой'; this.classList.remove('copied'); }, 2000); })">
-    🔗 Поделиться ссылкой
+  <footer style="border-top: 1px solid #E2E8F0; margin-top: 48px; padding: 20px 0; color: #475569; font-size: 13px;">
+    <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <span><strong style="color: #0F766E;">DMITRY LAB</strong> — Craft. Construction. Result.</span>
+      <span class="mono">v. 1.1 · 2026-11-24</span>
+    </div>
+  </footer>
+
+  <button type="button" id="floating-share-btn" class="floating-share-btn" onclick="copyCurrentUrl(this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    <span>Поделиться ссылкой</span>
   </button>
+
+  <script>
+    function copyCurrentUrl(btn) {
+      const url = window.location.href;
+      if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+        navigator.share({ title: document.title, url }).catch(() => {});
+        return;
+      }
+      navigator.clipboard.writeText(url).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>Ссылка скопирована</span>';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><span>Поделиться ссылкой</span>';
+        }, 2000);
+      }).catch(() => {
+        prompt('Поделиться ссылкой', url);
+      });
+    }
+  </script>
 </body>
 </html>

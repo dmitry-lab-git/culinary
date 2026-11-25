@@ -1,5 +1,27 @@
 [
   {
+    "slug": "marinated-cucumbers",
+    "format": "html",
+    "tag": {
+      "ru": "Рецепт",
+      "en": "Recipe"
+    },
+    "status": {
+      "ru": "Опубликовано",
+      "en": "Published"
+    },
+    "version": "v1.1",
+    "date": "2026-11-25",
+    "title": {
+      "ru": "Маринованные огурцы",
+      "en": "Marinated Cucumbers"
+    },
+    "summary": {
+      "ru": "Редакционно обработанный рецепт маринованных огурцов с уточнёнными пропорциями на 1 л воды, пошаговой подготовкой и примечаниями по безопасности и хранению.",
+      "en": "Editorially revised pickled cucumber recipe with refined proportions per 1 L of water, step-by-step preparation, and notes on safety and storage."
+    }
+  },
+  {
     "slug": "fermented-leaf-tea",
     "format": "html",
     "tag": {

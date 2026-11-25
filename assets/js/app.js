@@ -4,6 +4,8 @@ const UI_STRINGS = {
     pageDescriptionIndex: 'Кулинарный журнал Dmitry Lab: проверенные рецепты, процессы ферментации и лабораторные заметки.',
     catalogTitle: 'Журнал рецептов и тестов',
     backBtn: '← Назад',
+    shareBtn: 'Поделиться ссылкой',
+    copiedBtn: 'Ссылка скопирована',
     versionLabel: 'Версия',
     firstDraftLabel: 'Первое оформление статьи',
     revisionLabel: 'Редакция',
@@ -17,6 +19,8 @@ const UI_STRINGS = {
     pageDescriptionIndex: 'Dmitry Lab culinary journal: tested recipes, fermentation processes, and lab notes.',
     catalogTitle: 'Recipe & Test Journal',
     backBtn: '← Back',
+    shareBtn: 'Share link',
+    copiedBtn: 'Link copied',
     versionLabel: 'Version',
     firstDraftLabel: 'Initial draft',
     revisionLabel: 'Revision',
@@ -69,6 +73,28 @@ function updateMetaDescription(text) {
     document.head.appendChild(meta);
   }
   meta.content = text;
+}
+
+// === ОБНОВЛЁННАЯ ФУНКЦИЯ ===
+function copyShareUrl(slug, lang, btnElement, shareIcon, checkIcon) {
+  const ui = UI_STRINGS[lang];
+  const shareUrl = new URL(`share/${encodeURIComponent(slug)}-${lang}.html`, window.location.href).href;
+
+  if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+    navigator.share({ title: document.title, url: shareUrl }).catch(() => {});
+    return;
+  }
+
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    btnElement.classList.add('copied');
+    btnElement.innerHTML = `${checkIcon}<span>${ui.copiedBtn}</span>`;
+    setTimeout(() => {
+      btnElement.classList.remove('copied');
+      btnElement.innerHTML = `${shareIcon}<span>${ui.shareBtn}</span>`;
+    }, 2000);
+  }).catch(() => {
+    prompt(ui.shareBtn, shareUrl);
+  });
 }
 
 function renderErrorBlock(message, retryLabel) {
@@ -218,6 +244,22 @@ async function renderPost(lang) {
       </header>
       <article class="post-body">${bodyHtml}${colophonHtml}</article>
     `;
+
+    // === ПЛАВАЮЩАЯ КНОПКА В СТИЛЕ DMITRY LAB ===
+    const shareIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+    const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+    const oldFloatBtn = document.getElementById('floating-share-btn');
+    if (oldFloatBtn) oldFloatBtn.remove();
+
+    const floatBtn = document.createElement('button');
+    floatBtn.id = 'floating-share-btn';
+    floatBtn.type = 'button';
+    floatBtn.className = 'floating-share-btn';
+    floatBtn.innerHTML = `${shareIcon}<span>${ui.shareBtn}</span>`;
+    floatBtn.onclick = () => copyShareUrl(slug, lang, floatBtn, shareIcon, checkIcon);
+    document.body.appendChild(floatBtn);
+
   } catch (err) {
     container.innerHTML = renderErrorBlock(ui.loadError, ui.retryBtn);
   }

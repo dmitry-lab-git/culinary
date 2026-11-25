@@ -61,5 +61,38 @@
       "ru": "Сбор, подготовка, ферментация и сушка сочных листьев для получения ароматной основы под горячий настой.",
       "en": "Harvesting, prep, fermentation, and drying of juicy leaves to produce an aromatic base for hot infusion."
     }
+  },
+  {
+    "slug": "sauerkraut",
+    "format": "html",
+    "tag": {
+      "ru": "Рецепт",
+      "en": "Recipe"
+    },
+    "status": {
+      "ru": "Опубликовано",
+      "en": "Published"
+    },
+    "firstVersion": "v1.0",
+    "firstDate": "2026-07-23",
+    "version": "v1.1",
+    "date": "2026-11-26",
+    "author": {
+      "ru": "Дмитрий Мелихов",
+      "en": "Dmitry Melikhov"
+    },
+    "sourceRecipe": {
+      "ru": "На основе открытых источников сети",
+      "en": "Based on open online sources"
+    },
+    "platform": "Dmitry Lab Culinary",
+    "title": {
+      "ru": "Квашеная капуста",
+      "en": "Sauerkraut"
+    },
+    "summary": {
+      "ru": "Классическая ферментация белокочанной капусты с морковью и солью в стеклянной банке с последующим хранением в холодильнике.",
+      "en": "Classic lacto-fermentation of white cabbage with carrots and salt in a glass jar followed by refrigerated storage."
+    }
   }
 ]

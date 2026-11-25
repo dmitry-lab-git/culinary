@@ -94,5 +94,38 @@
       "ru": "Классическая ферментация белокочанной капусты с морковью и солью в стеклянной банке с последующим хранением в холодильнике.",
       "en": "Classic lacto-fermentation of white cabbage with carrots and salt in a glass jar followed by refrigerated storage."
     }
+  },
+  {
+    "slug": "fruit-nut-sourdough-pancakes",
+    "format": "html",
+    "tag": {
+      "ru": "Рецепт",
+      "en": "Recipe"
+    },
+    "status": {
+      "ru": "Опубликовано",
+      "en": "Published"
+    },
+    "firstVersion": "v 1.0",
+    "firstDate": "2026-06-06",
+    "version": "v 1.1",
+    "date": "2026-11-25",
+    "author": {
+      "ru": "Дмитрий Мелихов",
+      "en": "Dmitry Melikhov"
+    },
+    "sourceRecipe": {
+      "ru": "На основе открытых источников сети",
+      "en": "Based on open online sources"
+    },
+    "platform": "Dmitry Lab Culinary",
+    "title": {
+      "ru": "Фруктово-ореховые блины на опаре",
+      "en": "Fruit and Nut Sourdough Pancakes"
+    },
+    "summary": {
+      "ru": "Питательные блины на пшеничной муке и опаре с курагой, чёрным изюмом, бананом, орехами и вязким тестом, подходящие в качестве десерта.",
+      "en": "Nutritious wheat and starter pancakes with dried apricots, black raisins, banana, nuts, and a thick batter suited for dessert."
+    }
   }
 ]

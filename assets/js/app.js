@@ -19,7 +19,14 @@ const UI_STRINGS = {
     loading: 'Загрузка…',
     notFound: 'Материал не найден.',
     loadError: 'Ошибка загрузки материалов.',
-    retryBtn: 'Повторить'
+    retryBtn: 'Повторить',
+    aiAccordionTitle: 'Дополнительные возможности: разбор рецепта с помощью AI-ассистента',
+    aiAccordionBody: [
+      'Данная публикация содержит расширенное описание рецептуры, ингредиентов и технологических процессов.',
+      'Для более подробного изучения материала вы можете скопировать ссылку на эту страницу и передать её любому AI-ассистенту, поддерживающему работу с веб-ссылками. Это позволит задавать дополнительные вопросы, получать пояснения к отдельным этапам приготовления, разбирать назначение ингредиентов и лучше понимать описанные процессы.',
+      'Вы можете использовать AI-ассистента для уточнения терминологии, изучения технологических особенностей и рассмотрения альтернативных вариантов.',
+      'Ответы AI-ассистента следует рассматривать как дополнительный информационный материал, а не как подтверждение безопасности рецептуры или замену профессиональных технологических рекомендаций.'
+    ]
   },
   en: {
     pageTitleIndex: 'Dmitry Lab — Recipe & Test Journal',
@@ -41,7 +48,14 @@ const UI_STRINGS = {
     loading: 'Loading…',
     notFound: 'Entry not found.',
     loadError: 'Failed to load entries.',
-    retryBtn: 'Retry'
+    retryBtn: 'Retry',
+    aiAccordionTitle: 'Additional Features: exploring the recipe with an AI assistant',
+    aiAccordionBody: [
+      'This publication contains an expanded description of the recipe, its ingredients, and the preparation processes involved.',
+      'For a more detailed exploration of the material, you can copy the link to this page and share it with any AI assistant that supports working with web links. This will allow you to ask follow-up questions, receive explanations of individual preparation steps, explore the purpose of specific ingredients, and gain a better understanding of the processes described.',
+      'You can use an AI assistant to clarify terminology, explore technological aspects, and consider alternative approaches.',
+      'AI-generated responses should be treated as supplementary informational material, not as confirmation of recipe safety or a substitute for professional technological guidance.'
+    ]
   }
 };
 
@@ -205,6 +219,36 @@ function renderColophon(item, ui, lang) {
   return `${editionsHtml}${colophonHtml}`;
 }
 
+function renderAiAccordion(ui) {
+  if (!ui.aiAccordionTitle || !Array.isArray(ui.aiAccordionBody)) return '';
+  const paragraphs = ui.aiAccordionBody
+    .map((text) => `    <p>${text}</p>`)
+    .join('\n');
+
+  return `
+<details class="ai-accordion">
+  <summary class="ai-accordion-summary">
+    <span class="ai-accordion-title">${ui.aiAccordionTitle}</span>
+    <span class="ai-accordion-icon" aria-hidden="true">+</span>
+  </summary>
+  <div class="ai-accordion-body">
+${paragraphs}
+  </div>
+</details>`;
+}
+
+function stripManualAiAccordion(html) {
+  return html.replace(/<details\s+class=["']ai-accordion["'][\s\S]*?<\/details>\s*/gi, '');
+}
+
+function insertAiAccordionBeforeFirstHeading(html, accordionHtml) {
+  if (!accordionHtml) return html;
+  if (/<h2\b/i.test(html)) {
+    return html.replace(/<h2\b/i, `${accordionHtml}\n\n<h2`);
+  }
+  return `${accordionHtml}\n\n${html}`;
+}
+
 function stripManualColophon(html) {
   return html.replace(/<div\s+class=["']doc-colophon["'][\s\S]*?<\/div>\s*$/i, '').trim();
 }
@@ -300,7 +344,9 @@ async function renderPost(lang) {
       ? rawContent
       : (window.marked ? window.marked.parse(rawContent) : rawContent);
 
-    const bodyHtml = stripManualColophon(parsedHtml);
+    const cleanedHtml = stripManualAiAccordion(stripManualColophon(parsedHtml));
+    const aiAccordionHtml = renderAiAccordion(ui);
+    const bodyHtml = insertAiAccordionBeforeFirstHeading(cleanedHtml, aiAccordionHtml);
     const colophonHtml = renderColophon(item, ui, lang);
 
     container.innerHTML = `
